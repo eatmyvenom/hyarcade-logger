@@ -4,6 +4,7 @@ name = name == "bot" ? argv[argv.length - 1] : name;
 name = name == undefined ? "hyarcade" : name
 
 function daytime() {
+    let d = new Date();
     return `${("0" + d.getMonth()).slice(-2)}/${("0" +d.getDate()).slice(-2)}-${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}:${("0" + d.getSeconds()).slice(-2)}:${("00" + d.getMilliseconds()).slice(-3)}`
 }
 
