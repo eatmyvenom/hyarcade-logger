@@ -1,4 +1,6 @@
-const { argv } = require("process");
+const {
+    argv
+} = require("process");
 let name = argv[2];
 name = name == "bot" ? argv[argv.length - 1] : name;
 name = name == undefined ? "hyarcade" : name;
@@ -18,7 +20,7 @@ function daytime() {
  */
 function print(type, string, color = "\x1b[0m") {
     string = "" + string;
-    for (let s of string.split("\n")) {
+    for(let s of string.split("\n")) {
         println(type, s, color);
     }
 }
@@ -31,7 +33,9 @@ function print(type, string, color = "\x1b[0m") {
 function println(type, string, color = "\x1b[0m") {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
     console.log(str);
-    require("fs").writeFile("stdout.log", str + "\n", { flag: "a" }, () => {});
+    require("fs").writeFile("stdout.log", str + "\n", {
+        flag: "a"
+    }, () => {});
 }
 
 /**
@@ -39,7 +43,7 @@ function println(type, string, color = "\x1b[0m") {
  */
 function error(string) {
     string = "" + string;
-    for (let s of string.split("\n")) {
+    for(let s of string.split("\n")) {
         errorln(s);
     }
 }
@@ -50,7 +54,9 @@ function error(string) {
 function errorln(string) {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
     console.log(str);
-    require("fs").writeFile("stderr.log", str + "\n", { flag: "a" }, () => {});
+    require("fs").writeFile("stderr.log", str + "\n", {
+        flag: "a"
+    }, () => {});
 }
 
 module.exports = class Logger {
