@@ -6,7 +6,7 @@ name = name == "bot" ? argv[argv.length - 1] : name;
 name = name == undefined ? "hyarcade" : name;
 
 /**
- *
+ * @returns {string} Formatted time
  */
 function daytime() {
     let d = new Date();
@@ -14,9 +14,9 @@ function daytime() {
 }
 
 /**
- * @param type
- * @param string
- * @param color
+ * @param {string} type
+ * @param {string} string
+ * @param {string} color
  */
 function print(type, string, color = "\x1b[0m") {
     string = "" + string;
@@ -26,9 +26,9 @@ function print(type, string, color = "\x1b[0m") {
 }
 
 /**
- * @param type
- * @param string
- * @param color
+ * @param {string} type
+ * @param {string} string
+ * @param {string} color
  */
 function println(type, string, color = "\x1b[0m") {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
@@ -39,7 +39,7 @@ function println(type, string, color = "\x1b[0m") {
 }
 
 /**
- * @param string
+ * @param {string} string
  */
 function error(string) {
     string = "" + string;
@@ -49,7 +49,7 @@ function error(string) {
 }
 
 /**
- * @param string
+ * @param {string} string
  */
 function errorln(string) {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
