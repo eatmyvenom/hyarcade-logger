@@ -10,17 +10,16 @@ name = name == undefined ? "hyarcade" : name;
  */
 function daytime() {
     let d = new Date();
-    return `${("0" + d.getMonth()).slice(-2)}/${("0" +d.getDate()).slice(-2)}-${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}:${("0" + d.getSeconds()).slice(-2)}:${("00" + d.getMilliseconds()).slice(-3)}`;
+    return `${(`0${d.getMonth()}`).slice(-2)}/${(`0${d.getDate()}`).slice(-2)}-${(`0${d.getHours()}`).slice(-2)}:${(`0${d.getMinutes()}`).slice(-2)}:${(`0${d.getSeconds()}`).slice(-2)}:${(`00${d.getMilliseconds()}`).slice(-3)}`;
 }
 
 /**
  * @param {string} type
- * @param {string} string
+ * @param {*} string
  * @param {string} color
  */
 function print(type, string, color = "\x1b[0m") {
-    string = "" + string;
-    for(let s of string.split("\n")) {
+    for(let s of string?.toString()?.split("\n") ?? "") {
         println(type, s, color);
     }
 }
@@ -33,7 +32,7 @@ function print(type, string, color = "\x1b[0m") {
 function println(type, string, color = "\x1b[0m") {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
     console.log(str);
-    require("fs").writeFile("stdout.log", str + "\n", {
+    require("fs").writeFile("stdout.log", `${str}\n`, {
         flag: "a"
     }, () => {});
 }
@@ -42,8 +41,7 @@ function println(type, string, color = "\x1b[0m") {
  * @param {string} string
  */
 function error(string) {
-    string = "" + string;
-    for(let s of string.split("\n")) {
+    for(let s of string?.toString()?.split("\n") ?? "") {
         errorln(s);
     }
 }
@@ -54,7 +52,7 @@ function error(string) {
 function errorln(string) {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
     console.log(str);
-    require("fs").writeFile("stderr.log", str + "\n", {
+    require("fs").writeFile("stderr.log", `${str}\n`, {
         flag: "a"
     }, () => {});
 }
