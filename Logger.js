@@ -8,7 +8,7 @@ name = name == undefined ? "hyarcade" : name;
 /**
  * @returns {string} Formatted time
  */
-function daytime() {
+function daytime () {
     let d = new Date();
     return `${(`0${d.getMonth()}`).slice(-2)}/${(`0${d.getDate()}`).slice(-2)}-${(`0${d.getHours()}`).slice(-2)}:${(`0${d.getMinutes()}`).slice(-2)}:${(`0${d.getSeconds()}`).slice(-2)}:${(`00${d.getMilliseconds()}`).slice(-3)}`;
 }
@@ -18,7 +18,7 @@ function daytime() {
  * @param {*} string
  * @param {string} color
  */
-function print(type, string, color = "\x1b[0m") {
+function print (type, string, color = "\x1b[0m") {
     for(let s of string?.toString()?.split("\n") ?? "") {
         println(type, s, color);
     }
@@ -29,7 +29,7 @@ function print(type, string, color = "\x1b[0m") {
  * @param {string} string
  * @param {string} color
  */
-function println(type, string, color = "\x1b[0m") {
+function println (type, string, color = "\x1b[0m") {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
     console.log(str);
     require("fs").writeFile("stdout.log", `${str}\n`, {
@@ -40,7 +40,7 @@ function println(type, string, color = "\x1b[0m") {
 /**
  * @param {string} string
  */
-function error(string) {
+function error (string) {
     for(let s of string?.toString()?.split("\n") ?? "") {
         errorln(s);
     }
@@ -49,7 +49,7 @@ function error(string) {
 /**
  * @param {string} string
  */
-function errorln(string) {
+function errorln (string) {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
     console.log(str);
     require("fs").writeFile("stderr.log", `${str}\n`, {
@@ -63,7 +63,7 @@ module.exports = class Logger {
      *
      * @param {string[]} content
      */
-    static log(...content) {
+    static log (...content) {
         print("LOG", content.join(" "));
     }
 
@@ -74,7 +74,7 @@ module.exports = class Logger {
      *
      * @param {string} content
      */
-    static info(...content) {
+    static info (...content) {
         print("INFO", content.join(" "), "\x1b[32m");
     }
 
@@ -83,7 +83,7 @@ module.exports = class Logger {
      *
      * @param {string} content
      */
-    static warn(...content) {
+    static warn (...content) {
         print("WARN", content.join(" "), "\x1b[33m");
     }
 
@@ -92,7 +92,7 @@ module.exports = class Logger {
      *
      * @param {string} content
      */
-    static debug(...content) {
+    static debug (...content) {
         print("DEBUG", content.join(" "), "\x1b[95m");
     }
 
@@ -103,7 +103,7 @@ module.exports = class Logger {
      *
      * @param {string} content
      */
-    static error(...content) {
+    static error (...content) {
         error(content.join(" "));
     }
 
