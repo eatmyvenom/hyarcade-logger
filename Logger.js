@@ -99,6 +99,15 @@ module.exports = class Logger {
     static dbg = this.debug;
 
     /**
+     * Log content to stdout or a file
+     *
+     * @param {string} content
+     */
+    static verbose (...content) {
+      print("VERBOSE", content.join(" "), "\x1b[37m");
+    }
+
+    /**
      * Log content to stderr or a file
      *
      * @param {string} content
