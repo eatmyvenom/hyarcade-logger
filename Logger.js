@@ -104,7 +104,7 @@ module.exports = class Logger {
      * @param {string} content
      */
     static verbose (...content) {
-      print("VERBOSE", content.join(" "), "\x1b[37m");
+      print("VERBOSE", content.join(" "), "\x1b[90m");
     }
 
     /**
