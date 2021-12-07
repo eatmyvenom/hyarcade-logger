@@ -1,6 +1,7 @@
 const {
   argv
 } = require("process");
+const verbose = argv.includes("--verbose") || argv.includes("-v");
 let name = argv[2];
 name = name == "bot" ? argv[argv.length - 1] : name;
 name = name == undefined ? "hyarcade" : name;
@@ -104,7 +105,9 @@ module.exports = class Logger {
      * @param {string} content
      */
     static verbose (...content) {
-      print("VERBOSE", content.join(" "), "\x1b[90m");
+      if(verbose) {
+        print("VERBOSE", content.join(" "), "\x1b[90m");
+      }
     }
 
     /**
