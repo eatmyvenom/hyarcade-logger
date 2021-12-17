@@ -2,9 +2,6 @@ const {
   argv
 } = require("process");
 const verbose = argv.includes("--verbose") || argv.includes("-v");
-let name = argv[2];
-name = name == "bot" ? argv[argv.length - 1] : name;
-name = name == undefined ? "hyarcade" : name;
 
 /**
  * @returns {string} Formatted time
@@ -19,9 +16,9 @@ function daytime () {
  * @param {*} string
  * @param {string} color
  */
-function print (type, string, color = "\x1b[0m") {
+function print (type, string, name, color = "\x1b[0m") {
   for(const s of string?.toString()?.split("\n") ?? "") {
-    println(type, s, color);
+    println(type, s, name, color);
   }
 }
 
@@ -30,27 +27,24 @@ function print (type, string, color = "\x1b[0m") {
  * @param {string} string
  * @param {string} color
  */
-function println (type, string, color = "\x1b[0m") {
+function println (type, string, name, color = "\x1b[0m") {
   const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
   console.log(str);
-  require("fs").writeFile("stdout.log", `${str}\n`, {
-    flag: "a"
-  }, () => {});
 }
 
 /**
  * @param {string} string
  */
-function error (string) {
+function error (string, name) {
   for(const s of string?.toString()?.split("\n") ?? "") {
-    errorln(s);
+    errorln(s, name);
   }
 }
 
 /**
  * @param {string} string
  */
-function errorln (string) {
+function errorln (string, name) {
   const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
   console.log(str);
   require("fs").writeFile("stderr.log", `${str}\n`, {
@@ -59,13 +53,22 @@ function errorln (string) {
 }
 
 module.exports = class Logger {
+
+  static name;
+
   /**
    * Log content to stdout or a file
    *
    * @param {string[]} content
    */
   static log (...content) {
-    print("LOG", content.join(" "));
+    if(Logger.name == undefined) {
+      Logger.name = argv[2];
+      Logger.name = Logger.name == "bot" ? argv[argv.length - 1] : Logger.name;
+      Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
+    }
+
+    print("LOG", content.join(" "), Logger.name);
   }
 
     static out = this.log;
@@ -76,7 +79,13 @@ module.exports = class Logger {
      * @param {string} content
      */
     static info (...content) {
-      print("INFO", content.join(" "), "\x1b[32m");
+      if(Logger.name == undefined) {
+        Logger.name = argv[2];
+        Logger.name = Logger.name == "bot" ? argv[argv.length - 1] : Logger.name;
+        Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
+      }
+
+      print("INFO", content.join(" "), Logger.name, "\x1b[32m");
     }
 
     /**
@@ -85,7 +94,13 @@ module.exports = class Logger {
      * @param {string} content
      */
     static warn (...content) {
-      print("WARN", content.join(" "), "\x1b[33m");
+      if(Logger.name == undefined) {
+        Logger.name = argv[2];
+        Logger.name = Logger.name == "bot" ? argv[argv.length - 1] : Logger.name;
+        Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
+      }
+
+      print("WARN", content.join(" "), Logger.name, "\x1b[33m");
     }
 
     /**
@@ -94,7 +109,13 @@ module.exports = class Logger {
      * @param {string} content
      */
     static debug (...content) {
-      print("DEBUG", content.join(" "), "\x1b[95m");
+      if(Logger.name == undefined) {
+        Logger.name = argv[2];
+        Logger.name = Logger.name == "bot" ? argv[argv.length - 1] : Logger.name;
+        Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
+      }
+
+      print("DEBUG", content.join(" "), Logger.name, "\x1b[95m");
     }
 
     static dbg = this.debug;
@@ -105,8 +126,14 @@ module.exports = class Logger {
      * @param {string} content
      */
     static verbose (...content) {
+      if(Logger.name == undefined) {
+        Logger.name = argv[2];
+        Logger.name = Logger.name == "bot" ? argv[argv.length - 1] : Logger.name;
+        Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
+      }
+
       if(verbose) {
-        print("VERBOSE", content.join(" "), "\x1b[90m");
+        print("VERBOSE", content.join(" "), Logger.name, "\x1b[90m");
       }
     }
 
@@ -116,7 +143,13 @@ module.exports = class Logger {
      * @param {string} content
      */
     static error (...content) {
-      error(content.join(" "));
+      if(Logger.name == undefined) {
+        Logger.name = argv[2];
+        Logger.name = Logger.name == "bot" ? argv[argv.length - 1] : Logger.name;
+        Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
+      }
+
+      error(content.join(" "), Logger.name);
     }
 
     static err = this.error;
