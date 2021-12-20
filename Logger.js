@@ -14,6 +14,7 @@ function daytime () {
 /**
  * @param {string} type
  * @param {*} string
+ * @param {string} name
  * @param {string} color
  */
 function print (type, string, name, color = "\x1b[0m") {
@@ -25,6 +26,7 @@ function print (type, string, name, color = "\x1b[0m") {
 /**
  * @param {string} type
  * @param {string} string
+ * @param {string} name
  * @param {string} color
  */
 function println (type, string, name, color = "\x1b[0m") {
@@ -34,6 +36,7 @@ function println (type, string, name, color = "\x1b[0m") {
 
 /**
  * @param {string} string
+ * @param {string} name
  */
 function error (string, name) {
   for(const s of string?.toString()?.split("\n") ?? "") {
@@ -43,6 +46,7 @@ function error (string, name) {
 
 /**
  * @param {string} string
+ * @param {string} name
  */
 function errorln (string, name) {
   const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
