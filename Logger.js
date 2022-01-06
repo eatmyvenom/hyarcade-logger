@@ -60,7 +60,7 @@ function errorln (string, name) {
   const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
   console.log(str);
 
-  writeFile(path.join(process.cwd(), "logs", `${daytime().trim()} - ${name.trim()}-out.log`), `${string}\n`, { flag: "a" })
+  writeFile(path.join(process.cwd(), "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, { flag: "a" })
     .then(() => {})
     .catch(console.error);
 }
