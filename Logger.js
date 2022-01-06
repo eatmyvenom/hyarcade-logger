@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+const { writeFile } = require("fs-extra");
+const path = require("path");
 const {
   argv
 } = require("process");
@@ -21,6 +24,7 @@ function print (type, string, name, color = "\x1b[0m") {
   for(const s of string?.toString()?.split("\n") ?? "") {
     println(type, s, name, color);
   }
+
 }
 
 /**
@@ -32,6 +36,10 @@ function print (type, string, name, color = "\x1b[0m") {
 function println (type, string, name, color = "\x1b[0m") {
   const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
   console.log(str);
+
+  writeFile(path.join(process.cwd(), "logs", `${type}-out.log`), `${string}\n`, { flag: "a" })
+    .then(() => {})
+    .catch(console.error);
 }
 
 /**
@@ -51,9 +59,10 @@ function error (string, name) {
 function errorln (string, name) {
   const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
   console.log(str);
-  require("fs").writeFile("stderr.log", `${str}\n`, {
-    flag: "a"
-  }, () => {});
+
+  writeFile(path.join(process.cwd(), "logs", `${type}-out.log`), `${string}\n`, { flag: "a" })
+    .then(() => {})
+    .catch(console.error);
 }
 
 module.exports = class Logger {
