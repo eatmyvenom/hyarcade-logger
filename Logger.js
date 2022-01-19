@@ -15,16 +15,16 @@ function daytime () {
 }
 
 /**
- * @param {string} type
- * @param {*} string
+ * @param {string} string
  * @param {string} name
- * @param {string} color
  */
-function print (type, string, name, color = "\x1b[0m") {
-  for(const s of string?.toString()?.split("\n") ?? "") {
-    println(type, s, name, color);
-  }
+function errorln (string, name) {
+  const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
+  console.log(str);
 
+  writeFile(path.join(process.cwd(), "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, { flag: "a" })
+    .then(() => {})
+    .catch(console.error);
 }
 
 /**
@@ -43,12 +43,14 @@ function println (type, string, name, color = "\x1b[0m") {
 }
 
 /**
- * @param {string} string
+ * @param {string} type
+ * @param {*} string
  * @param {string} name
+ * @param {string} color
  */
-function error (string, name) {
+function print (type, string, name, color = "\x1b[0m") {
   for(const s of string?.toString()?.split("\n") ?? "") {
-    errorln(s, name);
+    println(type, s, name, color);
   }
 }
 
@@ -56,13 +58,10 @@ function error (string, name) {
  * @param {string} string
  * @param {string} name
  */
-function errorln (string, name) {
-  const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
-  console.log(str);
-
-  writeFile(path.join(process.cwd(), "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, { flag: "a" })
-    .then(() => {})
-    .catch(console.error);
+function error (string, name) {
+  for(const s of string?.toString()?.split("\n") ?? "") {
+    errorln(s, name);
+  }
 }
 
 module.exports = class Logger {
