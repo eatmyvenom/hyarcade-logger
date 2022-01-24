@@ -2,9 +2,32 @@
 const { writeFile } = require("fs-extra");
 const path = require("path");
 const {
-  argv
+  argv,
+  stdout,
+  stderr
 } = require("process");
-const verbose = argv.includes("--verbose") || argv.includes("-v");
+
+let logLevel = 5;
+if(argv.includes("--verbose") || argv.includes("-v")) {
+  logLevel = 6;
+}
+
+const levels = [
+  "ERROR",
+  "WARN",
+  "LOG",
+  "INFO",
+  "DEBUG",
+  "VERBOSE"
+];
+
+/**
+ * @param {string} type
+ * @returns {boolean}
+ */
+function shouldLog (type) {
+  return levels.slice(0, logLevel).includes(type);
+}
 
 /**
  * @returns {string} Formatted time
@@ -19,8 +42,10 @@ function daytime () {
  * @param {string} name
  */
 function errorln (string, name) {
-  const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
-  console.log(str);
+  if(shouldLog("ERROR")) {
+    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
+    stderr.write(str, () => {});
+  }
 
   writeFile(path.join(process.cwd(), "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, { flag: "a" })
     .then(() => {})
@@ -34,8 +59,11 @@ function errorln (string, name) {
  * @param {string} color
  */
 function println (type, string, name, color = "\x1b[0m") {
-  const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
-  console.log(str);
+
+  if(shouldLog(type)) {
+    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
+    stdout.write(str, () => {});
+  }
 
   writeFile(path.join(process.cwd(), "logs", `${name.trim()}-out.log`), `${daytime().trim()} - ${string}\n`, { flag: "a" })
     .then(() => {})
@@ -144,9 +172,8 @@ module.exports = class Logger {
         Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
       }
 
-      if(verbose) {
-        print("VERBOSE", content.join(" "), Logger.name, "\x1b[90m");
-      }
+      
+      print("VERBOSE", content.join(" "), Logger.name, "\x1b[90m");
     }
 
     /**
