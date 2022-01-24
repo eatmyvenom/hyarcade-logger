@@ -43,7 +43,7 @@ function daytime () {
  */
 function errorln (string, name) {
   if(shouldLog("ERROR")) {
-    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`;
+    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m\n`;
     stderr.write(str, () => {});
   }
 
@@ -61,7 +61,7 @@ function errorln (string, name) {
 function println (type, string, name, color = "\x1b[0m") {
 
   if(shouldLog(type)) {
-    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`;
+    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m\n`;
     stdout.write(str, () => {});
   }
 
