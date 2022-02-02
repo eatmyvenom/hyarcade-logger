@@ -23,9 +23,9 @@ function shouldLog(type) {
  */
 function daytime() {
   const d = new Date();
-  return `${`0${d.getMonth() + 1}`.slice(-2)}/${`0${d.getDate()}`.slice(-2)}-${`0${d.getHours()}`.slice(
+  return `${`0${d.getMonth() + 1}`.slice(-2)}/${`0${d.getDate()}`.slice(-2)}-${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(-2)}:${`0${d.getSeconds()}`.slice(
     -2,
-  )}:${`0${d.getMinutes()}`.slice(-2)}:${`0${d.getSeconds()}`.slice(-2)}:${`00${d.getMilliseconds()}`.slice(-3)}`;
+  )}:${`00${d.getMilliseconds()}`.slice(-3)}`;
 }
 
 /**
@@ -34,7 +34,7 @@ function daytime() {
  */
 function errorln(string, name) {
   if (shouldLog("ERROR")) {
-    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m\n`;
+    const str = `[\u001B[36m${daytime().trim()}\u001B[0m] [\u001B[36m${name.trim()}\u001B[0m] [\u001B[31mERROR\u001B[0m]\u001B[31m ${string}\u001B[0m\n`;
     stderr.write(str, () => {});
   }
 
@@ -51,9 +51,9 @@ function errorln(string, name) {
  * @param {string} name
  * @param {string} color
  */
-function println(type, string, name, color = "\x1b[0m") {
+function println(type, string, name, color = "\u001B[0m") {
   if (shouldLog(type)) {
-    const str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m\n`;
+    const str = `[\u001B[36m${daytime().trim()}\u001B[0m] [\u001B[36m${name.trim()}\u001B[0m] [${color}${type}\u001B[0m]${color} ${string}\u001B[0m\n`;
     stdout.write(str, () => {});
   }
 
@@ -70,7 +70,7 @@ function println(type, string, name, color = "\x1b[0m") {
  * @param {string} name
  * @param {string} color
  */
-function print(type, string, name, color = "\x1b[0m") {
+function print(type, string, name, color = "\u001B[0m") {
   for (const s of string?.toString()?.split("\n") ?? "") {
     println(type, s, name, color);
   }
@@ -118,7 +118,7 @@ module.exports = class Logger {
       Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
     }
 
-    print("INFO", content.join(" "), Logger.name, "\x1b[32m");
+    print("INFO", content.join(" "), Logger.name, "\u001B[32m");
   }
 
   /**
@@ -133,7 +133,7 @@ module.exports = class Logger {
       Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
     }
 
-    print("WARN", content.join(" "), Logger.name, "\x1b[33m");
+    print("WARN", content.join(" "), Logger.name, "\u001B[33m");
   }
 
   /**
@@ -148,7 +148,7 @@ module.exports = class Logger {
       Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
     }
 
-    print("DEBUG", content.join(" "), Logger.name, "\x1b[95m");
+    print("DEBUG", content.join(" "), Logger.name, "\u001B[95m");
   }
 
   static dbg = this.debug;
@@ -165,7 +165,7 @@ module.exports = class Logger {
       Logger.name = Logger.name == undefined ? "hyarcade" : Logger.name;
     }
 
-    print("VERBOSE", content.join(" "), Logger.name, "\x1b[90m");
+    print("VERBOSE", content.join(" "), Logger.name, "\u001B[90m");
   }
 
   /**
