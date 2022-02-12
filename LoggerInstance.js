@@ -94,7 +94,7 @@ module.exports = class LoggerInstance {
   name;
   emoji = "🎮";
 
-  constructor(name, emoji) {
+  constructor(name, emoji = "🎮") {
     this.name = name;
     this.emoji = emoji;
   }
