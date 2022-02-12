@@ -90,7 +90,7 @@ function error(string, name) {
   }
 }
 
-module.exports = class LoggerInstance {
+class LoggerInstance {
   name;
   emoji = "🎮";
 
@@ -105,7 +105,7 @@ module.exports = class LoggerInstance {
    * @param {string[]} content
    */
   log(...content) {
-    print("LOG", content.join(" "), this.name);
+    print("LOG", content.join(" "), this.name, undefined, this.emoji);
   }
 
   out = this.log;
@@ -116,7 +116,7 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   info(...content) {
-    print("INFO", content.join(" "), this.name, "\u001B[32m");
+    print("INFO", content.join(" "), this.name, "\u001B[32m", this.emoji);
   }
 
   /**
@@ -125,7 +125,7 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   warn(...content) {
-    print("WARN", content.join(" "), this.name, "\u001B[33m");
+    print("WARN", content.join(" "), this.name, "\u001B[33m", this.emoji);
   }
 
   /**
@@ -134,7 +134,7 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   debug(...content) {
-    print("DEBUG", content.join(" "), this.name, "\u001B[95m");
+    print("DEBUG", content.join(" "), this.name, "\u001B[95m", this.emoji);
   }
 
   dbg = this.debug;
@@ -145,7 +145,7 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   verbose(...content) {
-    print("VERBOSE", content.join(" "), this.name, "\u001B[90m");
+    print("VERBOSE", content.join(" "), this.name, "\u001B[90m", this.emoji);
   }
 
   /**
@@ -158,4 +158,6 @@ module.exports = class LoggerInstance {
   }
 
   err = this.error;
-};
+}
+
+module.exports = LoggerInstance;
