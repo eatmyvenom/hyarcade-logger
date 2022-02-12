@@ -105,12 +105,6 @@ module.exports = class LoggerInstance {
    * @param {string[]} content
    */
   log(...content) {
-    if (this.name == undefined) {
-      this.name = argv[2];
-      this.name = this.name == "bot" ? argv[argv.length - 1] : this.name;
-      this.name = this.name == undefined ? "hyarcade" : this.name;
-    }
-
     print("LOG", content.join(" "), this.name);
   }
 
@@ -122,12 +116,6 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   info(...content) {
-    if (this.name == undefined) {
-      this.name = argv[2];
-      this.name = this.name == "bot" ? argv[argv.length - 1] : this.name;
-      this.name = this.name == undefined ? "hyarcade" : this.name;
-    }
-
     print("INFO", content.join(" "), this.name, "\u001B[32m");
   }
 
@@ -137,12 +125,6 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   warn(...content) {
-    if (this.name == undefined) {
-      this.name = argv[2];
-      this.name = this.name == "bot" ? argv[argv.length - 1] : this.name;
-      this.name = this.name == undefined ? "hyarcade" : this.name;
-    }
-
     print("WARN", content.join(" "), this.name, "\u001B[33m");
   }
 
@@ -152,12 +134,6 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   debug(...content) {
-    if (this.name == undefined) {
-      this.name = argv[2];
-      this.name = this.name == "bot" ? argv[argv.length - 1] : this.name;
-      this.name = this.name == undefined ? "HyArcade" : this.name;
-    }
-
     print("DEBUG", content.join(" "), this.name, "\u001B[95m");
   }
 
@@ -169,12 +145,6 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   verbose(...content) {
-    if (this.name == undefined) {
-      this.name = argv[2];
-      this.name = this.name == "bot" ? argv[argv.length - 1] : this.name;
-      this.name = this.name == undefined ? "HyArcade" : this.name;
-    }
-
     print("VERBOSE", content.join(" "), this.name, "\u001B[90m");
   }
 
@@ -184,12 +154,6 @@ module.exports = class LoggerInstance {
    * @param {string} content
    */
   error(...content) {
-    if (this.name == undefined) {
-      this.name = argv[2];
-      this.name = this.name == "bot" ? argv[argv.length - 1] : this.name;
-      this.name = this.name == undefined ? "HyArcade" : this.name;
-    }
-
     error(content.join(" "), this.name);
   }
 
