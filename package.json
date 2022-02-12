@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A logger for usage with hyarcade between modules",
   "main": "Logger.js",
+  "module": "Logger.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eatmyvenom/hyarcade-logger.git"
